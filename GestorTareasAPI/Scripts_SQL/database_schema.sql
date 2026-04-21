@@ -1,67 +1,55 @@
-﻿-- Creacion de la base de datos
-CREATE DATABASE GestorTareasDB;
+﻿CREATE DATABASE GestorTareasDB;
 GO
-
 USE GestorTareasDB;
 GO
 
--- Creacion de la tabla Users
+-- TABLA DE USUARIOS
 CREATE TABLE Users (
-    id INT IDENTITY(1,1) PRIMARY KEY,
-    nombre NVARCHAR(100) NOT NULL,
-    email NVARCHAR(150) NOT NULL UNIQUE,
-    fecha_creacion DATETIME DEFAULT GETDATE()
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    Nombre NVARCHAR(100) NOT NULL,
+    Email NVARCHAR(150) NOT NULL UNIQUE,
+    FechaCreacion DATETIME DEFAULT GETDATE()
 );
-GO
 
--- Creacion de la tabla TaskStates (Estados de las tareas)
+-- TABLA DE ESTADOS
 CREATE TABLE TaskStates (
-    id INT IDENTITY(1,1) PRIMARY KEY,
-    nombre NVARCHAR(50) NOT NULL UNIQUE, 
-    activo BIT DEFAULT 1                 
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    Nombre NVARCHAR(50) NOT NULL UNIQUE, 
+    Activo BIT DEFAULT 1
 );
-GO
 
--- Creacion de la tabla Tasks
+-- TABLA DE TAREAS
 CREATE TABLE Tasks (
-    id INT IDENTITY(1,1) PRIMARY KEY,
-    titulo NVARCHAR(150) NOT NULL,
-    descripcion NVARCHAR(MAX) NULL,
-    id_estado INT NOT NULL,              
-    id_usuario INT NOT NULL,             
-    fecha_creacion DATETIME DEFAULT GETDATE(),
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    Titulo NVARCHAR(150) NOT NULL,
+    Descripcion NVARCHAR(MAX) NULL,
+    IdEstado INT NOT NULL,              
+    IdUsuario INT NOT NULL,             
+    FechaCreacion DATETIME DEFAULT GETDATE(),
     
-    -- Relaciones 
-    CONSTRAINT FK_Tasks_TaskStates FOREIGN KEY (id_estado) REFERENCES TaskStates(id),
-    CONSTRAINT FK_Tasks_Users FOREIGN KEY (id_usuario) REFERENCES Users(id) ON DELETE CASCADE
+    CONSTRAINT FK_Tasks_TaskStates FOREIGN KEY (IdEstado) REFERENCES TaskStates(Id),
+    CONSTRAINT FK_Tasks_Users FOREIGN KEY (IdUsuario) REFERENCES Users(Id) ON DELETE CASCADE
 );
+
+-- INDICES 
+CREATE INDEX IX_Tasks_IdEstado ON Tasks(IdEstado);
+CREATE INDEX IX_Tasks_IdUsuario ON Tasks(IdUsuario);
 GO
 
--- ==========================================
--- INSERCION DE DATOS DE PRUEBA
--- ==========================================
+-- 5. INSERCIÓN DE DATOS
+INSERT INTO TaskStates (Nombre, Activo) VALUES 
+('Pendiente', 1), ('En progreso', 1), ('Completada', 1), ('Cancelada', 0);
 
--- Insertar Estados
-INSERT INTO TaskStates (nombre, activo) VALUES 
-('Pendiente', 1),
-('En progreso', 1),
-('Completada', 1),
-('Cancelada', 0); 
-GO
-
--- Insertar Usuarios
-INSERT INTO Users (nombre, email) VALUES 
+INSERT INTO Users (Nombre, Email) VALUES 
 ('Ana García', 'ana.garcia@email.com'),
 ('Carlos López', 'carlos.lopez@email.com'),
 ('María Fernández', 'maria.fernandez@email.com');
-GO
 
--- Insertar Tareas de Oficina
-INSERT INTO Tasks (titulo, descripcion, id_estado, id_usuario) VALUES 
-('Redactar informe mensual', 'Recopilar los gastos del mes y armar el documento para contaduría', 1, 1),
-('Organizar reunión de equipo', 'Reservar la sala de conferencias y enviar invitaciones por calendario', 2, 1),
-('Comprar insumos de papelería', 'Pedir cajas de hojas A4, cartuchos de tóner y carpetas', 3, 2),
-('Revisar bandeja de entrada', 'Responder consultas de proveedores en el correo general', 1, 2),
-('Actualizar agenda de contactos', 'Cargar los números de teléfono de los nuevos clientes al sistema', 2, 3),
-('Preparar presentación de ventas', 'Armar las diapositivas para la reunión con la gerencia', 3, 3);
+INSERT INTO Tasks (Titulo, Descripcion, IdEstado, IdUsuario) VALUES 
+('Redactar informe mensual', 'Recopilar los gastos del mes', 1, 1),
+('Organizar reunión', 'Reservar sala y enviar invitaciones', 2, 1),
+('Comprar insumos', 'Hojas A4 y tóner', 3, 2),
+('Revisar correo', 'Responder a proveedores', 1, 2),
+('Actualizar agenda', 'Cargar nuevos clientes', 2, 3),
+('Preparar presentación', 'Diapositivas para gerencia', 3, 3);
 GO
