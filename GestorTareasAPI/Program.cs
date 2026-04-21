@@ -1,26 +1,33 @@
 using GestorTareasAPI.Data;
 using GestorTareasAPI.Repositories;
-using GestorTareasAPI.Services;
 using Microsoft.EntityFrameworkCore;
+using GestorTareasAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-var app = builder.Build();
-
+// Configurar la conexión a SQL Server
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+// Registro de Repositorios y Servicios 
 builder.Services.AddScoped<ITaskRepository, TaskRepository>();
 builder.Services.AddScoped<ITaskService, TaskService>();
 
-// Configure the HTTP request pipeline.
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowReactApp",
+        policy => policy.AllowAnyOrigin() // En producción aquí pondrías la URL de tu React
+                        .AllowAnyMethod()
+                        .AllowAnyHeader());
+});
+
+
+var app = builder.Build();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -28,9 +35,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseCors("AllowReactApp");
 app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();
