@@ -21,6 +21,15 @@ namespace GestorTareasAPI.Data
             modelBuilder.Entity<TaskState>().ToTable("TaskStates");
             modelBuilder.Entity<TaskItem>().ToTable("Tasks");
 
+            modelBuilder.Entity<TaskItem>()
+                .HasOne(t => t.Estado)
+                .WithMany()
+                .HasForeignKey(t => t.IdEstado);
+
+            modelBuilder.Entity<TaskItem>()
+                .HasOne(t => t.Usuario)
+                .WithMany()
+                .HasForeignKey(t => t.IdUsuario);
         }
     }
 }
