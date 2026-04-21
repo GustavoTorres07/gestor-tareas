@@ -1,0 +1,38 @@
+@GestorTareasAPI_HostAddress = https://localhost:44390
+
+### Obtener todas las tareas
+GET {{GestorTareasAPI_HostAddress}}/api/Tasks
+Accept: application/json
+
+### Obtener tareas filtradas por estado
+GET {{GestorTareasAPI_HostAddress}}/api/Tasks?status=Pendiente
+Accept: application/json
+
+### Obtener una tarea por ID
+GET {{GestorTareasAPI_HostAddress}}/api/Tasks/1
+Accept: application/json
+
+### Crear una nueva tarea
+POST {{GestorTareasAPI_HostAddress}}/api/Tasks
+Content-Type: application/json
+
+{
+  "titulo": "Tarea desde archivo HTTP",
+  "descripcion": "Probando el endpoint de creación",
+  "idEstado": 1,
+  "idUsuario": 1
+}
+
+### Actualizar una tarea
+PUT {{GestorTareasAPI_HostAddress}}/api/Tasks/1
+Content-Type: application/json
+
+{
+  "titulo": "Tarea Actualizada",
+  "descripcion": "Descripción nueva",
+  "idEstado": 2,
+  "idUsuario": 1
+}
+
+### Eliminar una tarea
+DELETE {{GestorTareasAPI_HostAddress}}/api/Tasks/6

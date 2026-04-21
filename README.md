@@ -54,8 +54,8 @@ Ubicación: `gestor-tareas-web/src/App.test.jsx`
 ### Estrategia de Git y Control de Versiones
 
 Para este proyecto se aplicaron buenas prácticas de control de versiones, asegurando una trazabilidad clara de las funcionalidades:
-* **Estructura de Ramas**: Se utilizó un modelo basado en Feature Branches (`main` para producción y `feature/`), integrados mediante Pull Requests.
-* **Historial de Commits**: Se mantuvo un historial robusto utilizando Semantic Commits para facilitar la lectura de la evolución técnica del proyecto.
+* **Estructura de Ramas**: Se utilizó un modelo basado en Feature Branches (`main` para producción y `feature/` para desarrollo aislado), integrados mediante Pull Requests.
+* **Historial de Commits**: Se mantuvo un historial robusto utilizando Semantic Commits (`feat:`, `fix:`, `docs:`, `test:`) para facilitar la lectura de la evolución técnica del proyecto.
 
 ---
 
