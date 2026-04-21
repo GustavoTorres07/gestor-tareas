@@ -16,11 +16,15 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 // Registro de Repositorios y Servicios 
 builder.Services.AddScoped<ITaskRepository, TaskRepository>();
 builder.Services.AddScoped<ITaskService, TaskService>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<ITaskStateRepository, TaskStateRepository>();
+builder.Services.AddScoped<ITaskStateService, TaskStateService>();
 
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowReactApp",
-        policy => policy.AllowAnyOrigin() // En producción aquí pondrías la URL de tu React
+        policy => policy.WithOrigins("http://localhost:5174", "http://localhost:5173")
                         .AllowAnyMethod()
                         .AllowAnyHeader());
 });
