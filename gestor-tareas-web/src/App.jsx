@@ -404,7 +404,7 @@ function App() {
               </div>
               <div><h3 className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Detalle de la Tarea</h3>
                 <div className="bg-slate-50 border border-slate-200 p-4 min-h-[120px] text-slate-700 whitespace-pre-wrap leading-relaxed shadow-inner">
-                  {viewingTask.descripcion || <span className="italic text-slate-400">Sin descripción registrada.</span>}
+                  {viewingTask.descripcion || <span className="italic text-slate-400">Sin descripción registrada</span>}
                 </div>
               </div>
             </div>
