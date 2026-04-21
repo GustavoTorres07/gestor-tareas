@@ -53,4 +53,4 @@ Este sistema es una solución **Fullstack** desarrollada para la administración
 * **UX Avanzada:** Se añadieron funcionalidades de **ordenamiento alfabético**, **filtros de fecha** y un **buscador global**.
 
 ---
-*Entrega para la evaluación de Desarrollador Junior Fullstack - Poder Judicial.*
+*Entrega para la evaluación de Desarrollador Junior Fullstack - Poder Judicial (La Pampa) - Desarrollador: Gustavo Torres
