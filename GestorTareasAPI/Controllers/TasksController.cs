@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GestorTareasAPI.Controllers
 {
+    /// <summary>
+    /// Controlador para la gestión de tareas del sistema
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class TasksController : ControllerBase
@@ -17,8 +20,16 @@ namespace GestorTareasAPI.Controllers
             _logger = logger;
         }
 
-        // GET: api/Tasks o api/Tasks?status=Pendiente
+        /// <summary>
+        /// Obtiene el listado completo de tareas, con la opcion de filtrar por nombre de estado
+        /// </summary>
+        /// <param name="status">Nombre del estado para filtrar</param>
+        /// <returns>Lista de tareas mapeadas a DTOs</returns>
+        /// <response code="200">Retorna la lista de tareas exitosamente</response>
+        /// <response code="500">Error interno del servidor al procesar la solicitud</response>
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<IEnumerable<TaskDTO>>> GetTasks([FromQuery] string? status)
         {
             try
@@ -33,8 +44,16 @@ namespace GestorTareasAPI.Controllers
             }
         }
 
-        // GET: api/Tasks/5
+        /// <summary>
+        /// Obtiene el detalle de una tarea especifica por su ID
+        /// </summary>
+        /// <param name="id">ID numerico de la tarea</param>
+        /// <returns>Un objeto TaskDTO</returns>
+        /// <response code="200">Tarea encontrada</response>
+        /// <response code="404">No se encontro ninguna tarea con el ID proporcionado</response>
         [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<TaskDTO>> GetTask(int id)
         {
             try
@@ -51,8 +70,16 @@ namespace GestorTareasAPI.Controllers
             }
         }
 
-        // POST: api/Tasks
+        /// <summary>
+        /// Registra una nueva tarea en la base de datos
+        /// </summary>
+        /// <param name="taskDto">Datos de la tarea a crear</param>
+        /// <returns>La tarea recien creada con su ID asignado</returns>
+        /// <response code="201">Tarea creada exitosamente</response>
+        /// <response code="400">Datos de entrada invalidos</response>
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<TaskDTO>> CreateTask([FromBody] TaskCreateDTO taskDto)
         {
             try
@@ -61,7 +88,6 @@ namespace GestorTareasAPI.Controllers
 
                 var result = await _service.CreateTaskAsync(taskDto);
 
-                // Retorna 201 Created y la ruta para ver el recurso creado
                 return CreatedAtAction(nameof(GetTask), new { id = result.Id }, result);
             }
             catch (Exception ex)
@@ -71,8 +97,17 @@ namespace GestorTareasAPI.Controllers
             }
         }
 
-        // PUT: api/Tasks/5
+        /// <summary>
+        /// Actualiza la información de una tarea existente
+        /// </summary>
+        /// <param name="id">ID de la tarea a modificar</param>
+        /// <param name="taskDto">Nuevos datos para la tarea</param>
+        /// <response code="204">Actualización exitosa</response>
+        /// <response code="404">La tarea especificada no existe</response>
         [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> UpdateTask(int id, [FromBody] TaskCreateDTO taskDto)
         {
             try
@@ -82,7 +117,7 @@ namespace GestorTareasAPI.Controllers
                 var updated = await _service.UpdateTaskAsync(id, taskDto);
                 if (!updated) return NotFound(new { message = "No se pudo actualizar: Tarea no encontrada." });
 
-                return NoContent(); // 204: Éxito pero no devuelve contenido (estándar para PUT)
+                return NoContent();
             }
             catch (Exception ex)
             {
@@ -91,8 +126,15 @@ namespace GestorTareasAPI.Controllers
             }
         }
 
-        // DELETE: api/Tasks/5
+        /// <summary>
+        /// Elimina una tarea de forma permanente
+        /// </summary>
+        /// <param name="id">ID de la tarea a borrar</param>
+        /// <response code="200">Tarea eliminada correctamente</response>
+        /// <response code="404">La tarea no existe</response>
         [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteTask(int id)
         {
             try
