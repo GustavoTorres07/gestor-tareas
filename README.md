@@ -35,7 +35,7 @@ Este sistema es una solución **Fullstack** desarrollada para la administración
 
 ---
 
-### 🧪 Estrategia de Testing
+### Estrategia de Testing
 
 Se implementaron pruebas automáticas en ambas capas para garantizar la robustez del sistema:
 
