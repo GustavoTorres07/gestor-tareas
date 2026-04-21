@@ -22,6 +22,8 @@ namespace GestorTareasAPI.Services
                 Id = t.Id,
                 Titulo = t.Titulo,
                 Descripcion = t.Descripcion,
+                IdEstado = t.IdEstado,
+                IdUsuario = t.IdUsuario,
                 Estado = t.Estado?.Nombre ?? "Sin Estado",
                 UsuarioAsignado = t.Usuario?.Nombre ?? "Sin Asignar",
                 FechaCreacion = t.FechaCreacion
@@ -38,6 +40,8 @@ namespace GestorTareasAPI.Services
                 Id = t.Id,
                 Titulo = t.Titulo,
                 Descripcion = t.Descripcion,
+                IdEstado = t.IdEstado,
+                IdUsuario = t.IdUsuario,
                 Estado = t.Estado?.Nombre ?? "Sin Estado",
                 UsuarioAsignado = t.Usuario?.Nombre ?? "Sin Asignar",
                 FechaCreacion = t.FechaCreacion
