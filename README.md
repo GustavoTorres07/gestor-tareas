@@ -35,6 +35,31 @@ Este sistema es una solución **Fullstack** desarrollada para la administración
 
 ---
 
+### Documentación de Endpoints (API REST)
+
+Además del CRUD solicitado, se desarrollaron endpoints adicionales para soportar la arquitectura relacional y los filtros avanzados del frontend. (Disponibles para prueba directa en Swagger).
+
+* Módulo de Tareas (Principal)
+
+GET /api/tasks : Obtiene el listado de tareas. Soporta parámetros de consulta para filtros avanzados.
+
+GET /api/tasks/{id} : Obtiene el detalle completo de una tarea específica.
+
+POST /api/tasks : Crea una nueva tarea asignada a un usuario.
+
+PUT /api/tasks/{id} : Actualiza la información o el estado de una tarea existente.
+
+DELETE /api/tasks/{id} : Elimina una tarea del sistema.
+
+* Módulos Adicionales (Desarrollo Extra)
+
+GET /api/taskstates : Devuelve los estados dinámicos normalizados desde la base de datos.
+
+GET /api/users : Devuelve la lista de usuarios registrados.
+    ```
+
+---
+
 ### Estrategia de Testing
 
 Se implementaron pruebas automáticas en ambas capas para garantizar la robustez del sistema:
